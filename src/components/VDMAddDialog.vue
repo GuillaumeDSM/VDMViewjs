@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import VDMService from '@/services/VDMService'
 export default {
   data() {
     return {
@@ -64,14 +65,14 @@ export default {
     }
   },
   methods: {
-    onSubmitVDMClick() {
+    async onSubmitVDMClick() {
       const newVdm = {
         text: this.vdmText,
         rating: 0
       }
+      await VDMService.addVDM(newVdm);
       this.$emit('VDMAddDialog_add:vdm', newVdm);
       this.onCloseDialog();
-        // TODO http call
     },
     onCloseDialog() {
       this.isDialogOpen = false

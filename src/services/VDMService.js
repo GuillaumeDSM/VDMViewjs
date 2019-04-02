@@ -3,7 +3,6 @@ import { API_URL } from '@/util/constants'
 
 export default  {
   getVDMs() {
-    // TODO delete 15 when GET All VDMs is implemented
     return axios.get(`${API_URL}/items`)
   },
 
@@ -15,7 +14,7 @@ export default  {
     return axios.post(`${API_URL}/item`, vdm)
   },
 
-  upvoteVDM() {
-    return axios.post(`${API_URL}/item/approve`)
+  upvoteVDM(vdmId) {
+    return axios.post(`${API_URL}/item/${vdmId}/approve`)
   }
 }

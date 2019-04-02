@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import VDMService from '@/services/VDMService'
 export default {
   data() {
     return {
@@ -36,7 +37,11 @@ export default {
     upvoteCount: {
       type: Number,
       required: true
-    } 
+    },
+    id: {
+      type: Number,
+      required: true
+    }
   },
   computed: {
     currentUpvoteCount() {
@@ -44,9 +49,13 @@ export default {
     }
   },
   methods: {
-    onVDMUpvoted() {
-      this.addedUpvotes++;
-      // TODO http call
+    async onVDMUpvoted() {
+      try {
+        await VDMService.upvoteVDM(this.id);
+        this.addedUpvotes++;
+      } catch (err) {
+        console.err('Error : ', err)
+      }
     }
   }
 }
