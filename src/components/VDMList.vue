@@ -1,81 +1,120 @@
 <template>
-  <v-flex xs12 sm6 offset-sm3>
-    <v-container>
+  <div>
+    <v-container id="scroll-target" class="scroll-y">
       <v-layout
-          text-xs-center
-          wrap
-        >
+        text-xs-center
+        wrap
+        v-scroll:#scroll-target="onScroll"
+      >
         <v-flex xs12>
-          <v-img
+          <!-- <v-img
             :src="require('../assets/logo.svg')"
             class="my-3"
             contain
             height="200"
-          ></v-img>
+          ></v-img> -->
+          <img src="../assets/logo_darkian.png"/>
         </v-flex>
+
+
+        <v-flex lg4 offset-lg4 md4 offset-md4 sm8 offset-sm2 xs12>
+          <v-btn
+            block
+            color="success"
+            @click="onOpenDialog"
+          >
+            Ajouter une VDM
+            <v-icon right>add</v-icon>
+          </v-btn>
+        </v-flex>
+
+        <v-flex lg8 offset-lg2 xs12>
+          <div v-for="(vdm, index) in vdmList" :key="index">
+            <VDMListElement :upvoteCount="vdm.rating" :text="vdm.text" />
+          </div> 
+        </v-flex>
+
+        <v-flex>
+          <v-btn 
+            ref="button" 
+            color="primary" 
+            block
+            v-show="showScrollButton"
+            @click="$vuetify.goTo(0, scrollOptions)">
+            scroll
+          </v-btn>
+        </v-flex>
+
       </v-layout>
+      <VDMAddDialog 
+        v-if="isDialogOpen" 
+        @VDMAddDialog_update:dialogState="onDialogStateChange"
+        @VDMAddDialog_add:vdm="onVDMAdded"/>
     </v-container>
-
-
-    <v-flex md4 offset-md4 xs12>
-      <v-btn
-        block
-        color="success"
-        @click="onAddVdmClick"
-      >
-        Ajouter une VDM
-        <v-icon right>add</v-icon>
-      </v-btn>
-    </v-flex>
-    <v-card>
-      <v-card-title class="mt-4" primary-title>
-        <div>
-          <img src="../assets/vdm_logo.png" />
-        </div>
-        <v-layout
-          align-center
-          justify-end
-        >
-          <v-icon medium color="red" class="mr-2 favorite-icon">favorite</v-icon>
-          <span class="subheading mr-2">256</span>
-        </v-layout>
-      </v-card-title>
-      <v-divider light></v-divider>
-      <v-card-text>
-        <div> {{ cardText }} </div>
-      </v-card-text>
-    </v-card>
-    <v-card class="mt-3">
-      <v-card-title primary-title>
-        <div>
-          <img src="../assets/vdm_logo.png" />
-        </div>
-        <v-layout
-          align-center
-          justify-end
-        >
-          <v-icon medium color="red" class="mr-2 favorite-icon">favorite</v-icon>
-          <span class="subheading mr-2">256</span>
-        </v-layout>
-      </v-card-title>
-      <v-divider light></v-divider>
-      <v-card-text>
-        <div> {{ cardText }} </div>
-      </v-card-text>
-    </v-card>
-  </v-flex>
+  </div>
 </template>
 
 <script>
+import VDMAddDialog from './VDMAddDialog';
+import VDMListElement from './VDMListElement';
 export default {
+  components: {
+    VDMAddDialog,
+    VDMListElement
+  },
   data() {
+    // TODO delete after connecting to database
+    const vdmList = [
+      {
+        rating: 200,
+        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
+      },
+      {
+        rating: 200,
+        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
+      },
+      {
+        rating: 200,
+        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
+      },
+      {
+        rating: 200,
+        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
+      }
+    ]
     return {
-      cardText: "Aujourd'hui, je rejoins une amie qui doit me présenter quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM"
+      cardText: "Aujourd'hui, je rejoins une amie qui doit me présenter quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",
+      isDialogOpen: false,
+      vdmList,
+      duration: 300,
+      offset: 0,
+      offsetTop: 0
+    }
+  },
+  computed: {
+    scrollOptions() {
+      return {
+        duration: this.duration,
+        offset: this.offset
+      }
+    },
+    showScrollButton() {
+      return this.offsetTop >= 50;
     }
   },
   methods: {
-    onAddVdmClick() {
-      this.$router.push('/create-vdm')
+    onOpenDialog() {
+      this.isDialogOpen = true
+    },
+    onDialogStateChange(state) {
+      this.isDialogOpen = state;
+    },
+    onVDMAdded(vdm) {
+      this.vdmList.unshift(vdm);
+    },
+    onScroll(e) {
+      this.offsetTop = e.target.scrollTop
+      console.log('offset top : ', this.offsetTop)
     }
   }
 }
