@@ -57,31 +57,14 @@
 <script>
 import VDMAddDialog from './VDMAddDialog';
 import VDMListElement from './VDMListElement';
+import VDMService from '../services/VDMService';
 export default {
   components: {
     VDMAddDialog,
     VDMListElement
   },
   data() {
-    // TODO delete after connecting to database
-    const vdmList = [
-      {
-        rating: 200,
-        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
-      },
-      {
-        rating: 200,
-        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
-      },
-      {
-        rating: 200,
-        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
-      },
-      {
-        rating: 200,
-        text: "Aujourd'hui, je rejoins une amie qui doit me présente quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",  
-      }
-    ]
+    const vdmList = []
     return {
       cardText: "Aujourd'hui, je rejoins une amie qui doit me présenter quelqu'un. De loin, son ami fait tellement de gestes que j’en déduis qu'il est muet. Ayant quelques bases, je le salue et lui demande s'il va bien en langue des signes. Il n'est pas muet, il est italien. VDM",
       isDialogOpen: false,
@@ -90,6 +73,9 @@ export default {
       offset: 0,
       offsetTop: 0
     }
+  },
+  created() {
+    this.fetchVDMs();
   },
   computed: {
     scrollOptions() {
@@ -103,6 +89,11 @@ export default {
     }
   },
   methods: {
+    fetchVDMs(){
+      VDMService.getVDMs().then((response) => {
+        this.vdmList = response.data
+      })
+    },
     onOpenDialog() {
       this.isDialogOpen = true
     },
