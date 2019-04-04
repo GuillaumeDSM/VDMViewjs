@@ -11,7 +11,14 @@
           contain
           height="200"
         ></v-img> -->
-        <img src="../assets/logo_darkian.png"/>
+        <v-img
+          :src="require('../assets/logo_darkian.png')"
+          class="my-3"
+          contain
+          height="200"
+        ></v-img>
+
+       <!-- <img src="../assets/logo_darkian.png"/>-->
       </v-flex>
 
 
