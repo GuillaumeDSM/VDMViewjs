@@ -8,7 +8,7 @@
           align-center
           justify-end
         >
-          <v-btn icon @click="onVDMUpvoted"> 
+          <v-btn icon @click="onVDMUpvoted" v-show="canUpvote"> 
             <v-icon medium color="blue" class="mr-2">thumb_up</v-icon>
           </v-btn>
           <span class="subheading mr-2">{{ currentUpvoteCount }}</span>
@@ -41,6 +41,10 @@ export default {
     id: {
       type: Number,
       required: true
+    },
+    canUpvote: {
+      type: Boolean,
+      default: true
     }
   },
   computed: {

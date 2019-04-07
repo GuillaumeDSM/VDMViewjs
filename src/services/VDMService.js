@@ -10,6 +10,10 @@ export default  {
     return axios.get(`${API_URL}/item/${vdmId}`)
   },
 
+  getRandomVDM() {
+    return axios.get(`${API_URL}/item`)
+  },
+
   addVDM(vdm) {
     return axios.post(`${API_URL}/item`, vdm)
   },

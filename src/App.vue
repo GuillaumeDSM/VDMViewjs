@@ -1,6 +1,9 @@
 <template>
   <v-app :dark="isDark">
     <v-toolbar app>
+      <span class="hidden-sm-and-up">
+        <v-toolbar-side-icon></v-toolbar-side-icon>
+      </span>
       <a href="/">
         <img
           :src="require('./assets/logo.svg')"
@@ -9,6 +12,10 @@
       <v-toolbar-title class="headline text-uppercase">
         <span @click="onLogoClick" class="app-title">DARKIAN</span>
       </v-toolbar-title>
+      <v-toolbar-items class="ml-3 hidden-sm-and-down">
+        <v-btn @click="goToVdmList">VDMs</v-btn>
+        <v-btn @click="goToRandomVdmPage">Random</v-btn>
+      </v-toolbar-items>
       <v-spacer></v-spacer>
       <v-toolbar-items>
         <v-btn>
@@ -38,6 +45,12 @@ export default {
   methods: {
     onLogoClick() {
       this.$router.push('/')
+    },
+    goToVdmList() {
+      this.$router.push('/')
+    },
+    goToRandomVdmPage() {
+      this.$router.push('random-vdm')
     }
   }
 }

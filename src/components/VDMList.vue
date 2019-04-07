@@ -17,8 +17,6 @@
           contain
           height="200"
         ></v-img>
-
-       <!-- <img src="../assets/logo_darkian.png"/>-->
       </v-flex>
 
 
@@ -34,8 +32,12 @@
       </v-flex>
 
       <v-flex lg8 offset-lg2 xs12>
-        <div v-for="(vdm, index) in vdmList" :key="index" >
-          <VDMListElement :upvoteCount="vdm.rating" :text="vdm.text" :id="index"/>
+        <div v-for="(vdm, index) in reverseVdmList" :key="index" >
+          <VDMListElement 
+            :upvoteCount="vdm.rating" 
+            :text="vdm.text" 
+            :id="reverseVdmList - index - 1"
+            :can-upvote="true"/>
         </div> 
       </v-flex>
 
@@ -67,10 +69,9 @@ export default {
     VDMListElement
   },
   data() {
-    const vdmList = []
     return {
       isDialogOpen: false,
-      vdmList,
+      vdmList: [],
       offsetTop: 0
     }
   },
@@ -84,6 +85,9 @@ export default {
   computed: {
     showScrollButton() {
       return this.offsetTop >= 300
+    },
+    reverseVdmList() {
+      return this.vdmList.slice().reverse();
     }
   },
   methods: {
