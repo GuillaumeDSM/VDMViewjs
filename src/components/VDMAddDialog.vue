@@ -52,7 +52,7 @@ export default {
       vdmText: '',
       rules: [
         v => !!v || 'Champ requis',
-        v =>  (v && v.length >= 5 && v.length <= 200) || 'La description doit être comprise entre 5 et 200 caractères'
+        v =>  (v && v.length >= 5 && v.length <= 500) || 'La description doit être comprise entre 5 et 200 caractères'
       ]
     }
   },

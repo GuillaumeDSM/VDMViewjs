@@ -36,7 +36,7 @@
           <VDMListElement 
             :upvoteCount="vdm.rating" 
             :text="vdm.text" 
-            :id="reverseVdmList - index - 1"
+            :id="reverseVdmList.length - index - 1"
             :can-upvote="true"/>
         </div> 
       </v-flex>
@@ -103,7 +103,7 @@ export default {
       this.isDialogOpen = state
     },
     onVDMAdded(vdm) {
-      this.vdmList.unshift(vdm)
+      this.vdmList.push(vdm)
 
     },
     onScrollPositionChange() {
