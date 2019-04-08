@@ -1,29 +1,27 @@
 <template>
   <v-app :dark="isDark">
     <v-toolbar app>
-      <span class="hidden-sm-and-up">
-        <v-toolbar-side-icon></v-toolbar-side-icon>
-      </span>
       <a href="/">
         <img
-          :src="require('./assets/logo.svg')"
-          height="45">
+          :src="require('@/assets/logo.svg')"
+          height="40">
       </a>
       <v-toolbar-title class="headline text-uppercase">
         <span @click="onLogoClick" class="app-title">DARKIAN</span>
       </v-toolbar-title>
-      <v-toolbar-items class="ml-3 hidden-sm-and-down">
-        <v-btn @click="goToVdmList">VDMs</v-btn>
-        <v-btn @click="goToRandomVdmPage">Random</v-btn>
+      <v-toolbar-items class="ml-2">
+        <v-btn flat @click="goToVdmList" class="toolbar-nav-text">VDMs</v-btn>
+        <v-btn flat @click="goToRandomVdmPage" class="toolbar-nav-text">Random</v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
       <v-toolbar-items>
-        <v-btn>
-          <v-switch 
-            label="GO Dark !" 
+        <v-btn flat class="dark-switch-btn-wrapper">
+          <v-switch
+            class="dark-switch-btn" 
             v-model="isDark" 
             hide-details>
           </v-switch>
+          <span class="switch-btn-label mt-1">Go Dark !</span>
         </v-btn>
       </v-toolbar-items>
     </v-toolbar>
@@ -63,5 +61,22 @@ export default {
  }
  .app-title {
    cursor: pointer;
+ }
+ .toolbar-nav-text {
+   font-size: 14px;
+ }
+ @media(max-width: 767px) {
+  .dark-switch-btn label {
+    display: none;
+  }
+  .app-title {
+    display: none;
+  }
+  .switch-btn-label {
+    display: none;
+  }
+  .v-toolbar__items {
+    margin-left: 0px !important;
+  }
  }
 </style>
