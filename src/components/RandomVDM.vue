@@ -1,7 +1,15 @@
 <template>
   <v-container>
-    <v-layout text-xs-center wrap>
-      <v-flex lg8 offset-lg2 xs12 v-if="!loading">
+    <v-layout text-xs-center v-if="loading">
+      <v-flex xs12>
+        <v-progress-circular
+          indeterminate
+          color="primary"
+        ></v-progress-circular>
+      </v-flex>
+    </v-layout>
+    <v-layout text-xs-center wrap v-else>
+      <v-flex lg8 offset-lg2 xs12>
         <VDMListElement 
           :upvoteCount="vdm.rating" 
           :text="vdm.text" 
