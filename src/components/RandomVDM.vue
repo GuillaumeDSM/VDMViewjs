@@ -19,7 +19,7 @@
         />
       </v-flex>
       <v-flex lg2 offset-lg5 sm6 offset-sm3 xs12 class="mt-3">
-        <v-btn block class="primary" @click="fetchRandomVDM">Random VDM</v-btn>
+        <v-btn block class="primary">Random VDM</v-btn>
       </v-flex>
     </v-layout>
   </v-container>
@@ -46,9 +46,6 @@ export default {
       const res = await VDMService.getRandomVDM()
       this.vdm = res.data
       this.loading = false;
-    },
-    setData (vdm) {
-      this.vdm = vdm
     }
   }
 }

@@ -5,12 +5,6 @@
       wrap
     >
       <v-flex xs12>
-        <!-- <v-img
-          :src="require('../assets/logo.svg')"
-          class="my-3"
-          contain
-          height="200"
-        ></v-img> -->
         <v-img
           :src="require('@/assets/logo_darkian.png')"
           class="my-3"
@@ -33,11 +27,11 @@
 
       <v-flex lg8 offset-lg2 xs12>
         <div v-for="(vdm, index) in reverseVdmList" :key="index" >
-          <VDMListElement 
+          <!-- <VDMListElement 
             :upvoteCount="vdm.rating" 
             :text="vdm.text" 
             :id="reverseVdmList.length - index - 1"
-            :can-upvote="true"/>
+            :can-upvote="true"/> -->
         </div> 
       </v-flex>
 
