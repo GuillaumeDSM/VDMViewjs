@@ -46,9 +46,6 @@ export default {
       const res = await VDMService.getRandomVDM()
       this.vdm = res.data
       this.loading = false;
-    },
-    setData (vdm) {
-      this.vdm = vdm
     }
   }
 }
